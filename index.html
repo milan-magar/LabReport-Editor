@@ -11,23 +11,58 @@
     nav a { color: #ffd966; margin: 0 1rem; text-decoration: none; font-weight: 500; }
     nav a:hover { text-decoration: underline; }
     .container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-    h1, h2 { color: white; margin-top: 1.5rem; padding-bottom:20px }
+    h1 { color: #1f2b3c; margin-top: 0; padding-bottom: 10px; }
+    h2 { color: #1f2b3c; margin-top: 1.5rem; padding-bottom: 10px; }
     p, li { line-height: 1.6; color: #2c3e66; }
     ul { margin-left: 2rem; }
     code { background: #eef2f6; padding: 0.2rem 0.4rem; border-radius: 8px; font-family: monospace; }
-    footer { margin-top: auto;}
-    .footer{color: white;}
+    footer { margin-top: auto; }
+    .footer { color: white; }
+    .project-link {
+      display: inline-block;
+      background: #2c8f6e;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      margin: 0.5rem 0.5rem 0 0;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .project-link:hover {
+      background: #1f6e54;
+      transform: translateY(-2px);
+    }
+    .project-link.final {
+      background: #0a2f44;
+    }
+    .project-link.final:hover {
+      background: #1a4b66;
+    }
+    .links-section {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: #f0f4f8;
+      border-radius: 1rem;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 <header>
   <h2>📄 Milan Magar</h2>
-  <nav><a href="index.html">Home</a> <a href="project.html">Project</a> <a href="contact.html">Contact</a> <a href="documentation.html">Documentation</a></nav>
+  <nav><a href="index.html">Home</a> <a href="project.html">Project</a> <a href="project2.html">Final</a> <a href="contact.html">Contact</a> <a href="documentation.html">Documentation</a></nav>
 </header>
 <div class="container">
   <h1>📖 How CoverCraft Works</h1>
   <p><strong>CoverCraft</strong> is a pure front‑end tool that generates custom PDF cover pages using <code>jsPDF</code>. No server, no uploads – everything runs locally in your browser.</p>
   
+  <div class="links-section">
+    <strong>🚀 Launch Cover Page Generators:</strong><br>
+    <a href="project.html" class="project-link">📄 Standard Cover Page</a>
+    <a href="project2.html" class="project-link final">🏛️ Final Cover Page (Two Logos + Project Line)</a>
+  </div>
+
   <h2>✨ Features</h2>
   <ul>
     <li>Custom title, subtitle, author name, and date</li>
@@ -35,21 +70,24 @@
     <li><strong>Live preview</strong> inside an iframe (no download needed)</li>
     <li><strong>One‑click download</strong> as a high‑quality A4 PDF</li>
     <li>Responsive layout, works on desktop & tablet</li>
+    <li>Two logo support with college name centered (Final Cover Page)</li>
+    <li>Uploadable decorative line image (Final Cover Page)</li>
   </ul>
 
   <h2>🛠️ How to use</h2>
   <ol>
-    <li>Fill in the fields on the left side of the <a href="project.html">Project page</a>.</li>
+    <li>Choose either <strong>Standard Cover Page</strong> or <strong>Final Cover Page</strong> from the buttons above.</li>
+    <li>Fill in the fields on the left side of the generator page.</li>
     <li>Click <strong>Preview PDF</strong> to see the result instantly.</li>
-    <li>If satisfied, click <strong>Download Cover</strong> to save the PDF.</li>
-    <li>The accent color affects the top line, underline, small circle, bottom line and a tiny rectangle.</li>
+    <li>If satisfied, click <strong>Download PDF</strong> to save the cover page.</li>
+    <li>For the Final Cover Page, you can upload two logos (left and right) and a decorative project line image.</li>
   </ol>
 
   <h2>📄 Technical stack</h2>
   <p>HTML5, CSS3, vanilla JavaScript, and <a href="https://github.com/parallax/jsPDF" target="_blank">jsPDF v2.5.1</a>. The PDF is generated in vector format and remains crisp at any zoom level.</p>
   
   <h2>🚀 Future plans</h2>
-  <p>Image upload, background patterns, more font choices, and export options (PNG, SVG). Contributions are welcome!</p>
+  <p>More cover templates, background patterns, additional font choices, and export options (PNG, SVG). Contributions are welcome!</p>
 </div>
 <footer><p class="footer">© 2026 Milan Magar – CoverCraft Studio</p></footer>
 </body>
