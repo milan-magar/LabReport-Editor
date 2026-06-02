@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Cover Page | Two Logos + Project Line</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #eef2f5; font-family: 'Segoe UI', Roboto, sans-serif; padding: 2rem 1.5rem; }
+    .app-card { max-width: 1400px; margin: 0 auto; background: white; border-radius: 2rem; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15); overflow: hidden; }
+    .header-bar { background: #0a2f44; color: white; padding: 1rem 2rem; text-align: center; }
+    .dashboard { display: flex; flex-wrap: wrap; gap: 1.8rem; padding: 2rem; }
+    .form-panel { flex: 1.2; min-width: 280px; background: #fefefe; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .preview-panel { flex: 1.8; min-width: 380px; background: #f8fafc; border-radius: 1.5rem; padding: 1rem; display: flex; flex-direction: column; }
+    .preview-container { background: #eef2f5; border-radius: 1.2rem; padding: 1rem; min-height: 550px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    iframe { width: 100%; height: 550px; border: none; border-radius: 0.8rem; background: white; }
+    .empty-preview { text-align: center; color: #2c5f7a; background: white; padding: 2rem; border-radius: 1rem; }
+    .form-group { margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-weight: 700; color: #0a2f44; font-size: 0.8rem; text-transform: uppercase; }
+    input, select { padding: 0.7rem 1rem; border: 1.5px solid #dce5ef; border-radius: 1rem; font-size: 0.9rem; }
+    .btn-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
+    .btn { border: none; padding: 0.7rem 1.6rem; border-radius: 2rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .btn-primary { background: #0a2f44; color: white; }
+    .btn-accent { background: #2c8f6e; color: white; }
+    footer { text-align: center; padding: 1rem; background: #f0f4f8; font-size: 0.75rem; border-top: 1px solid #dee6ef; }
+    .logo-thumb { margin-top: 8px; max-width: 80px; max-height: 80px; border: 1px solid #ccc; border-radius: 8px; padding: 4px; background: white; display: none; }
+    .address-group { margin-bottom: 2.5rem; }
+  </style>
+</head>
+<body>
+<div class="app-card">
+  <div class="header-bar">
+    <h1>📄 Final Cover Page – Two Logos + Project Line</h1>
+    <p>Margins 1″ · Two 30×30 mm logos · Times New Roman · Uploadable decorative line</p>
+  </div>
+  <div class="dashboard">
+    <div class="form-panel">
+      <div class="form-group"><label>🏛️ College Name (centered between logos)</label><input type="text" id="collegeName" value="TRINITY INTERNATIONAL COLLEGE"></div>
+      
+      <div class="form-group address-group"><label>📍 Address Line</label><input type="text" id="address" value="Dillibazaar Heights, Kathmandu"></div>
+      
+      <div class="form-group"><label>🎓 Affiliation</label><input type="text" id="affiliation" value="(Affiliated to Tribhuvan University)"></div>
+      
+      <div class="form-group">
+        <label>🖼️ Logo 1 (Left)</label>
+        <input type="file" id="logo1Upload" accept="image/*">
+        <img id="logo1Thumb" class="logo-thumb" alt="Preview">
+        <small>Resized to 30×30 mm</small>
+      </div>
+      
+      <div class="form-group">
+        <label>🖼️ Logo 2 (Right)</label>
+        <input type="file" id="logo2Upload" accept="image/*">
+        <img id="logo2Thumb" class="logo-thumb" alt="Preview">
+        <small>Resized to 30×30 mm</small>
+      </div>
+      
+      <div class="form-group">
+        <label>📏 Project Line Image (centered below title)</label>
+        <input type="file" id="projectLineUpload" accept="image/*">
+        <img id="projectLineThumb" class="logo-thumb" alt="Preview">
+        <small>Upload a decorative line/graphic (centered, max width 100 mm)</small>
+      </div>
+      
+      <div class="form-group"><label>📘 Lab Report Title</label><input type="text" id="reportName" value="Lab Report of Mathematics"></div>
+      
+      <div class="form-group"><label>👤 Student Name</label><input type="text" id="studentName" value="Milan Magar"></div>
+      <div class="form-group"><label>🔢 Roll No.</label><input type="text" id="rollNo" value="11"></div>
+      <div class="form-group"><label>📅 Semester</label><input type="text" id="semester" value="First"></div>
+      <div class="form-group"><label>🎓 Program</label><input type="text" id="program" value="BCA"></div>
+      
+      <div class="form-group"><label>👨‍🏫 Teacher Name</label><input type="text" id="teacherName" value="Ranjani Ghimire"></div>
+      <div class="form-group"><label>🏢 Department</label><input type="text" id="department" value="Department of BCA"></div>
+      
+      <div class="btn-row"><button class="btn btn-accent" id="previewBtn">👁️ Preview PDF</button><button class="btn btn-primary" id="downloadBtn">⬇️ Download PDF</button></div>
+      <hr><small>✔ Two logos (30×30 mm) with college name centered. Optional project line image appears below the title.</small>
+    </div>
+    <div class="preview-panel">
+      <div class="preview-container" id="previewContainer">
+        <div id="emptyPreviewMsg" class="empty-preview">🖼️ Click <strong>Preview PDF</strong> to generate final cover page</div>
+        <iframe id="pdfIframe" style="display: none;"></iframe>
+      </div>
+    </div>
+  </div>
+  <footer>© Milan Magar – Final Cover Page | Times New Roman | Two Logos | Project Line Image</footer>
+</div>
+
+<script>
+  // DOM elements
+  const collegeNameInput = document.getElementById('collegeName');
+  const addressInput = document.getElementById('address');
+  const affiliationInput = document.getElementById('affiliation');
+  const logo1Upload = document.getElementById('logo1Upload');
+  const logo2Upload = document.getElementById('logo2Upload');
+  const logo1Thumb = document.getElementById('logo1Thumb');
+  const logo2Thumb = document.getElementById('logo2Thumb');
+  const projectLineUpload = document.getElementById('projectLineUpload');
+  const projectLineThumb = document.getElementById('projectLineThumb');
+  const reportNameInput = document.getElementById('reportName');
+  const studentNameInput = document.getElementById('studentName');
+  const rollNoInput = document.getElementById('rollNo');
+  const semesterInput = document.getElementById('semester');
+  const programInput = document.getElementById('program');
+  const teacherNameInput = document.getElementById('teacherName');
+  const departmentInput = document.getElementById('department');
+  const previewBtn = document.getElementById('previewBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const pdfIframe = document.getElementById('pdfIframe');
+  const emptyPreviewMsgDiv = document.getElementById('emptyPreviewMsg');
+
+  let logo1Data = null, logo1Format = null;
+  let logo2Data = null, logo2Format = null;
+  let projectLineData = null, projectLineFormat = null;
+
+  logo1Upload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        logo1Data = ev.target.result;
+        logo1Format = file.type === 'image/jpeg' ? 'JPEG' : 'PNG';
+        logo1Thumb.src = logo1Data;
+        logo1Thumb.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else { logo1Data = null; logo1Thumb.style.display = 'none'; }
+  });
+
+  logo2Upload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        logo2Data = ev.target.result;
+        logo2Format = file.type === 'image/jpeg' ? 'JPEG' : 'PNG';
+        logo2Thumb.src = logo2Data;
+        logo2Thumb.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else { logo2Data = null; logo2Thumb.style.display = 'none'; }
+  });
+
+  projectLineUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        projectLineData = ev.target.result;
+        projectLineFormat = file.type === 'image/jpeg' ? 'JPEG' : 'PNG';
+        projectLineThumb.src = projectLineData;
+        projectLineThumb.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      projectLineData = null;
+      projectLineThumb.style.display = 'none';
+    }
+  });
+
+  // ========== EXACT MEASUREMENTS ==========
+  const MARGIN_MM = 25.4;              // 1 inch all sides
+  const PAGE_WIDTH_MM = 210;
+  const PAGE_HEIGHT_MM = 297;
+  const CONTENT_WIDTH_MM = PAGE_WIDTH_MM - 2 * MARGIN_MM; // 159.2 mm
+  
+  const LOGO_SIZE_MM = 30;             // 30×30 mm each
+  
+  const FONT_FAMILY = "times";         // Times New Roman
+  
+  // College name: Bold, 18 pt
+  const COLLEGE_FONT_SIZE_PT = 18;
+  
+  // Address & Affiliation: normal, 12 pt
+  const SUB_FONT_SIZE_PT = 12;
+  const SUB_LEADING_MM = 14 * 0.352778;
+  
+  // Lab Report Title: Bold, 18 pt, underlined
+  const TITLE_FONT_SIZE_PT = 18;
+  const TITLE_LEADING_MM = 28.8 * 0.352778;
+  
+  // Body text: headings bold, values normal, 14 pt
+  const BODY_FONT_SIZE_PT = 14;
+  const BODY_LEADING_MM = 21.6 * 0.352778;
+  
+  // Column gap: 12 pt = 4.23 mm
+  const COLUMN_SPACING_MM = 210 * 0.352778;
+
+  // Default image path for the project line (place a file named "project-line.png" in the same folder)
+  const DEFAULT_PROJECT_LINE_PATH = "project-line.png";
+
+  function sanitizeFields() {
+    if (!collegeNameInput.value.trim()) collegeNameInput.value = "TRINITY INTERNATIONAL COLLEGE";
+    if (!addressInput.value.trim()) addressInput.value = "Dillibazaar Heights, Kathmandu";
+    if (!affiliationInput.value.trim()) affiliationInput.value = "(Affiliated to Tribhuvan University)";
+    if (!reportNameInput.value.trim()) reportNameInput.value = "Lab Report of Mathematics";
+    if (!studentNameInput.value.trim()) studentNameInput.value = "Milan Magar";
+    if (!rollNoInput.value.trim()) rollNoInput.value = "11";
+    if (!semesterInput.value.trim()) semesterInput.value = "First";
+    if (!programInput.value.trim()) programInput.value = "BCA";
+    if (!teacherNameInput.value.trim()) teacherNameInput.value = "Ranjani Ghimire";
+    if (!departmentInput.value.trim()) departmentInput.value = "Department of BCA";
+  }
+
+  async function buildCoverPDF() {
+    sanitizeFields();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    doc.setFillColor(255,255,255);
+    doc.rect(0, 0, PAGE_WIDTH_MM, PAGE_HEIGHT_MM, 'F');
+
+    const collegeName = collegeNameInput.value.trim().toUpperCase();
+    const address = addressInput.value.trim();
+    const affiliation = affiliationInput.value.trim();
+    const reportName = reportNameInput.value.trim();
+    const studentName = studentNameInput.value.trim();
+    const rollNo = rollNoInput.value.trim();
+    const semester = semesterInput.value.trim();
+    const program = programInput.value.trim();
+    const teacherName = teacherNameInput.value.trim();
+    const department = departmentInput.value.trim();
+
+    const contentX = MARGIN_MM;
+    const contentCenterX = contentX + CONTENT_WIDTH_MM / 2;
+    let currentY = MARGIN_MM;
+
+    // ----- LOGOS AND COLLEGE NAME -----
+    const leftLogoX = 15;                               // near left edge
+    const rightLogoX = PAGE_WIDTH_MM - LOGO_SIZE_MM - 15; // near right edge
+    const collegeNameX = contentCenterX;
+    
+    if (logo1Data && logo1Format) {
+      try {
+        doc.addImage(logo1Data, logo1Format, leftLogoX, currentY, LOGO_SIZE_MM, LOGO_SIZE_MM);
+      } catch(e) { console.warn("Logo1 error"); }
+    } else {
+      doc.setFont(FONT_FAMILY, "bold");
+      doc.setFontSize(8);
+      doc.text("[Logo1]", leftLogoX + 5, currentY + 15);
+    }
+    
+    if (logo2Data && logo2Format) {
+      try {
+        doc.addImage(logo2Data, logo2Format, rightLogoX, currentY, LOGO_SIZE_MM, LOGO_SIZE_MM);
+      } catch(e) { console.warn("Logo2 error"); }
+    } else {
+      doc.setFont(FONT_FAMILY, "bold");
+      doc.setFontSize(8);
+      doc.text("[Logo2]", rightLogoX + 5, currentY + 15);
+    }
+    
+    doc.setFont(FONT_FAMILY, "bold");
+    doc.setFontSize(COLLEGE_FONT_SIZE_PT);
+    const collegeWidth = doc.getTextWidth(collegeName);
+    if (collegeWidth > CONTENT_WIDTH_MM - 20) {
+      let newSize = COLLEGE_FONT_SIZE_PT * (CONTENT_WIDTH_MM - 20) / collegeWidth;
+      newSize = Math.max(12, newSize);
+      doc.setFontSize(newSize);
+    }
+    doc.text(collegeName, collegeNameX, currentY + LOGO_SIZE_MM/2 + 3, { align: "center" });
+    currentY += LOGO_SIZE_MM + 8;
+
+    // ----- ADDRESS AND AFFILIATION (normal weight) -----
+    doc.setFont(FONT_FAMILY, "normal");
+    doc.setFontSize(SUB_FONT_SIZE_PT);
+    doc.text(address, contentCenterX, currentY, { align: "center" });
+    currentY += SUB_LEADING_MM;
+    doc.text(affiliation, contentCenterX, currentY, { align: "center" });
+    currentY += SUB_LEADING_MM + 12;   // gap after affiliation
+
+    // ----- LAB REPORT TITLE (underlined) -----
+    doc.setFont(FONT_FAMILY, "bold");
+    doc.setFontSize(TITLE_FONT_SIZE_PT);
+    const titleLines = doc.splitTextToSize(reportName, CONTENT_WIDTH_MM);
+    doc.text(titleLines, contentCenterX, currentY, { align: "center" });
+    const titleWidth = doc.getTextWidth(reportName);
+    const underlineY = currentY + 2;
+    doc.setLineWidth(0.35);
+    doc.line(contentCenterX - titleWidth/2, underlineY, contentCenterX + titleWidth/2, underlineY);
+    currentY += TITLE_LEADING_MM + 4;
+
+    // ----- PROJECT LINE IMAGE (centered) with default fallback -----
+    let imageData = projectLineData;
+    let imageFormat = projectLineFormat;
+    
+    // If no uploaded image, try to load the default image from local folder
+    if (!imageData) {
+      try {
+        const defaultImg = new Image();
+        await new Promise((resolve, reject) => {
+          defaultImg.onload = resolve;
+          defaultImg.onerror = reject;
+          defaultImg.src = DEFAULT_PROJECT_LINE_PATH;
+        });
+        const canvas = document.createElement('canvas');
+        canvas.width = defaultImg.width;
+        canvas.height = defaultImg.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(defaultImg, 0, 0);
+        imageData = canvas.toDataURL('image/png');
+        imageFormat = 'PNG';
+      } catch(e) {
+        console.warn("Default project line image not found:", DEFAULT_PROJECT_LINE_PATH);
+      }
+    }
+    
+    if (imageData && imageFormat) {
+      try {
+        const maxWidth = 25;
+        const img = new Image();
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = reject;
+          img.src = imageData;
+        });
+        let finalWidth = maxWidth;
+        let finalHeight = (img.height / img.width) * maxWidth;
+        const imgX = contentCenterX - finalWidth / 2;
+        doc.addImage(imageData, imageFormat, imgX, currentY, finalWidth, finalHeight);
+        currentY += finalHeight + 20;
+      } catch(e) { 
+        console.warn("Project line image error", e);
+        // fallback dashed line
+        doc.setDrawColor(150,150,150);
+        doc.setLineWidth(0.3);
+        doc.line(contentX, currentY + 5, contentX + CONTENT_WIDTH_MM, currentY + 5);
+        currentY += 10;
+      }
+    } else {
+      // fallback dashed line
+      doc.setDrawColor(150,150,150);
+      doc.setLineWidth(0.3);
+      doc.line(contentX, currentY + 5, contentX + CONTENT_WIDTH_MM, currentY + 5);
+      currentY += 10;
+    }
+
+    // ----- TWO COLUMNS (Submitted by / Submitted to) -----
+    const columnGap = COLUMN_SPACING_MM;
+    const columnWidth = (CONTENT_WIDTH_MM - columnGap) / 2;
+    const leftColX = contentX;
+    const rightColX = contentX + columnWidth + columnGap;
+    
+    let leftY = currentY;
+    let rightY = currentY;
+    
+    // Left heading
+    doc.setFont(FONT_FAMILY, "bold");
+    doc.setFontSize(BODY_FONT_SIZE_PT);
+    doc.text("Submitted by:", leftColX, leftY);
+    leftY += BODY_LEADING_MM + 3;
+    
+    // Left values
+    doc.setFont(FONT_FAMILY, "normal");
+    doc.text(studentName, leftColX, leftY); leftY += BODY_LEADING_MM;
+    doc.text(`Roll no: ${rollNo}`, leftColX, leftY); leftY += BODY_LEADING_MM;
+    doc.text(`Semester: ${semester}`, leftColX, leftY); leftY += BODY_LEADING_MM;
+    doc.text(`Program: ${program}`, leftColX, leftY); leftY += BODY_LEADING_MM;
+    
+    // Right heading
+    doc.setFont(FONT_FAMILY, "bold");
+    doc.text("Submitted to:", rightColX, rightY);
+    rightY += BODY_LEADING_MM + 3;
+    
+    // Right values
+    doc.setFont(FONT_FAMILY, "normal");
+    doc.text(teacherName, rightColX, rightY); rightY += BODY_LEADING_MM;
+    doc.text(department, rightColX, rightY); rightY += BODY_LEADING_MM;
+    
+    return doc;
+  }
+
+  async function updatePreview() {
+    try {
+      if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) URL.revokeObjectURL(pdfIframe.src);
+      const doc = await buildCoverPDF();
+      const blob = doc.output('blob');
+      const blobUrl = URL.createObjectURL(blob);
+      emptyPreviewMsgDiv.style.display = 'none';
+      pdfIframe.style.display = 'block';
+      pdfIframe.src = blobUrl;
+    } catch (err) {
+      emptyPreviewMsgDiv.innerHTML = `<span>⚠️ Preview error: ${err.message}</span>`;
+      emptyPreviewMsgDiv.style.display = 'flex';
+      pdfIframe.style.display = 'none';
+    }
+  }
+
+  async function downloadPDF() {
+    const doc = await buildCoverPDF();
+    const prefix = reportNameInput.value.trim().replace(/[^a-z0-9]/gi, '_').slice(0, 40) || "final_cover";
+    doc.save(`final_cover_${prefix}.pdf`);
+  }
+
+  previewBtn.onclick = (e) => { e.preventDefault(); updatePreview(); };
+  downloadBtn.onclick = (e) => { e.preventDefault(); downloadPDF(); };
+  pdfIframe.style.display = 'none';
+  emptyPreviewMsgDiv.style.display = 'flex';
+  window.addEventListener('beforeunload', () => {
+    if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) URL.revokeObjectURL(pdfIframe.src);
+  });
+</script>
+</body>
+</html>

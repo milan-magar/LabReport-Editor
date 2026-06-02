@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation | CoverCraft Studio</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f4f7fc; display: flex; flex-direction: column; min-height: 100vh; }
+    header, footer { background: #1f2b3c; color: white; text-align: center; padding: 1.2rem; }
+    nav a { color: #ffd966; margin: 0 1rem; text-decoration: none; font-weight: 500; }
+    nav a:hover { text-decoration: underline; }
+    .container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+    h1, h2 { color: white; margin-top: 1.5rem; padding-bottom:20px }
+    p, li { line-height: 1.6; color: #2c3e66; }
+    ul { margin-left: 2rem; }
+    code { background: #eef2f6; padding: 0.2rem 0.4rem; border-radius: 8px; font-family: monospace; }
+    footer { margin-top: auto;}
+    .footer{color: white;}
+  </style>
+</head>
+<body>
+<header>
+  <h2>📄 Milan Magar</h2>
+  <nav><a href="index.html">Home</a> <a href="project.html">Project</a> <a href="contact.html">Contact</a> <a href="documentation.html">Documentation</a></nav>
+</header>
+<div class="container">
+  <h1>📖 How CoverCraft Works</h1>
+  <p><strong>CoverCraft</strong> is a pure front‑end tool that generates custom PDF cover pages using <code>jsPDF</code>. No server, no uploads – everything runs locally in your browser.</p>
+  
+  <h2>✨ Features</h2>
+  <ul>
+    <li>Custom title, subtitle, author name, and date</li>
+    <li>Accent colour picker for lines, circles, and decorative elements</li>
+    <li><strong>Live preview</strong> inside an iframe (no download needed)</li>
+    <li><strong>One‑click download</strong> as a high‑quality A4 PDF</li>
+    <li>Responsive layout, works on desktop & tablet</li>
+  </ul>
+
+  <h2>🛠️ How to use</h2>
+  <ol>
+    <li>Fill in the fields on the left side of the <a href="project.html">Project page</a>.</li>
+    <li>Click <strong>Preview PDF</strong> to see the result instantly.</li>
+    <li>If satisfied, click <strong>Download Cover</strong> to save the PDF.</li>
+    <li>The accent color affects the top line, underline, small circle, bottom line and a tiny rectangle.</li>
+  </ol>
+
+  <h2>📄 Technical stack</h2>
+  <p>HTML5, CSS3, vanilla JavaScript, and <a href="https://github.com/parallax/jsPDF" target="_blank">jsPDF v2.5.1</a>. The PDF is generated in vector format and remains crisp at any zoom level.</p>
+  
+  <h2>🚀 Future plans</h2>
+  <p>Image upload, background patterns, more font choices, and export options (PNG, SVG). Contributions are welcome!</p>
+</div>
+<footer><p class="footer">© 2026 Milan Magar – CoverCraft Studio</p></footer>
+</body>
+</html>
