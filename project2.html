@@ -13,7 +13,7 @@
     .dashboard { display: flex; flex-wrap: wrap; gap: 1.8rem; padding: 2rem; }
     .form-panel { flex: 1.2; min-width: 280px; background: #fefefe; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .preview-panel { flex: 1.8; min-width: 380px; background: #f8fafc; border-radius: 1.5rem; padding: 1rem; display: flex; flex-direction: column; }
-    .preview-container { background: #eef2f5; border-radius: 1.2rem; padding: 1rem; min-height: 550px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    .preview-container { background: #eef2f5; border-radius: 1.2rem; padding: 1rem; min-height: 900px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
     iframe { width: 100%; height: 900px; border: none; border-radius: 0.8rem; background: white; }
     .empty-preview { text-align: center; color: #2c5f7a; background: white; padding: 2rem; border-radius: 1rem; }
     .form-group { margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
@@ -26,6 +26,12 @@
     footer { text-align: center; padding: 1rem; background: #f0f4f8; font-size: 0.75rem; border-top: 1px solid #dee6ef; }
     .logo-thumb { margin-top: 8px; max-width: 80px; max-height: 80px; border: 1px solid #ccc; border-radius: 8px; padding: 4px; background: white; display: none; }
     .address-group { margin-bottom: 2.5rem; }
+    
+    /* Mobile responsive - smaller iframe height */
+    @media (max-width: 768px) {
+      .preview-container { min-height: 550px; }
+      iframe { height: 550px; }
+    }
   </style>
 </head>
 <body>
@@ -184,7 +190,7 @@
   const BODY_LEADING_MM = 21.6 * 0.352778;
   
   // Column gap: 12 pt = 4.23 mm
-  const COLUMN_SPACING_MM = 210 * 0.352778;
+  const COLUMN_SPACING_MM = 12 * 0.352778;
 
   // Default image path for the project line (place a file named "project-line.png" in the same folder)
   const DEFAULT_PROJECT_LINE_PATH = "project-line.png";
@@ -306,7 +312,7 @@
     
     if (imageData && imageFormat) {
       try {
-        const maxWidth = 25;
+        const maxWidth = 80;
         const img = new Image();
         await new Promise((resolve, reject) => {
           img.onload = resolve;
