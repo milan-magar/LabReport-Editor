@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | CoverCraft Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Styles */
+    .main-header {
+      background: linear-gradient(135deg, #0a2f44 0%, #0a2f44 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .main-header h1 {
+      font-size: 1.8rem;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-header p {
+      opacity: 0.85;
+      font-size: 0.9rem;
+    }
+
+    /* Navigation */
+    .nav-bar {
+      background: #1a3a4c;
+      padding: 0.8rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-bar a {
+      color: #ffd966;
+      margin: 0 1.2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-bar a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      flex: 1;
+    }
+
+    /* Contact Card */
+    .contact-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .contact-header {
+      background: linear-gradient(135deg, #0a2f44 0%, #1a4b66 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .contact-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-header p {
+      opacity: 0.9;
+    }
+
+    .contact-body {
+      padding: 2rem;
+    }
+
+    /* Social Links Grid */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-item {
+      background: #f8fafc;
+      border-radius: 1rem;
+      padding: 1.2rem;
+      transition: all 0.3s ease;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .social-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-color: transparent;
+    }
+
+    .social-icon {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .social-info {
+      flex: 1;
+    }
+
+    .social-info h4 {
+      color: #0a2f44;
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+    }
+
+    .social-info p {
+      color: #4a5568;
+      font-size: 0.85rem;
+      word-break: break-all;
+    }
+
+    .social-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #2c8f6e;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover {
+      color: #1f6e54;
+      text-decoration: underline;
+    }
+
+    /* Icon Colors */
+    .github .social-icon { background: #24292e; color: white; }
+    .facebook .social-icon { background: #1877f2; color: white; }
+    .instagram .social-icon { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); color: white; }
+    .email .social-icon { background: #ea4335; color: white; }
+    .linkedin .social-icon { background: #0077b5; color: white; }
+
+    /* Coming Soon Badge */
+    .coming-soon {
+      background: #e2e8f0;
+      color: #2d3748;
+      padding: 0.2rem 0.6rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    /* Info Section */
+    .info-section {
+      background: #f0f4f8;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    .info-section h3 {
+      color: #0a2f44;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-section p {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .main-footer {
+      background: #0a2f44;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: auto;
+    }
+
+    .main-footer p {
+      opacity: 0.8;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-bar a {
+        margin: 0 0.8rem;
+        font-size: 0.85rem;
+      }
+      .contact-header h2 {
+        font-size: 1.4rem;
+      }
+      .social-item {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-header">
+    <h1>📄 CoverCraft Studio</h1>
+    <p>Professional PDF Cover Page Generator</p>
+  </div>
+  <div class="nav-bar">
+    <a href="index.html">🏠 Home</a>
+    <a href="project.html">📄 Standard Cover</a>
+    <a href="project2.html">🎓 Final Cover</a>
+    <a href="contact.html" style="color: white;">📬 Contact</a>
+    <a href="documentation.html">📖 Documentation</a>
+  </div>
+
+  <div class="container">
+    <div class="contact-card">
+      <div class="contact-header">
+        <h2>📬 Get in Touch</h2>
+        <p>Connect with me on social media or send an email</p>
+      </div>
+      <div class="contact-body">
+        <!-- Social Links Grid -->
+        <div class="social-grid">
+          <!-- GitHub -->
+          <div class="social-item github">
+            <div class="social-icon">🐙</div>
+            <div class="social-info">
+              <h4>GitHub</h4>
+              <p>github.com/milan-meow123</p>
+              <a href="https://github.com/milan-meow123" class="social-link" target="_blank">Visit Profile →</a>
+            </div>
+          </div>
+
+          <!-- Facebook -->
+          <div class="social-item facebook">
+            <div class="social-icon">📘</div>
+            <div class="social-info">
+              <h4>Facebook</h4>
+              <p>Milan Magar</p>
+              <a href="https://www.facebook.com/milan.magar.580027" class="social-link" target="_blank">Visit Profile →</a>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="social-item instagram">
+            <div class="social-icon">📸</div>
+            <div class="social-info">
+              <h4>Instagram</h4>
+              <p>@milan_meow123</p>
+              <a href="https://www.instagram.com/milan_meow123/" class="social-link" target="_blank">Visit Profile →</a>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="social-item email">
+            <div class="social-icon">📧</div>
+            <div class="social-info">
+              <h4>Email</h4>
+              <p>milanmagar8848.86@gmail.com</p>
+              <a href="mailto:milanmagar8848.86@gmail.com" class="social-link">Send Email →</a>
+            </div>
+          </div>
+
+          <!-- LinkedIn (Coming Soon) -->
+          <div class="social-item linkedin">
+            <div class="social-icon">🔗</div>
+            <div class="social-info">
+              <h4>LinkedIn <span class="coming-soon">Coming Soon</span></h4>
+              <p>Professional network profile</p>
+              <span class="social-link" style="opacity: 0.5;">Coming Soon →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-section">
+          <h3>💬 Let's Connect</h3>
+          <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out through any of these platforms. I'll get back to you as soon as possible!</p>
+          <p style="margin-top: 0.8rem; font-size: 0.85rem;">📍 Based in Kathmandu, Nepal | ⏰ Response within 24-48 hours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-footer">
+    <p>© 2026 Milan Magar – CoverCraft Studio | Professional PDF Cover Page Generator</p>
+    <p style="font-size: 0.75rem; margin-top: 0.3rem;">Built with jsPDF | Connect with me on social media</p>
+  </div>
+</body>
+</html>

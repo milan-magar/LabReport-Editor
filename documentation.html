@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation | CoverCraft Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9edf2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Styles */
+    .main-header {
+      background: linear-gradient(135deg, #0a2f44 0%, #0a2f44 100%);
+      color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .main-header h1 {
+      font-size: 1.8rem;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-header p {
+      opacity: 0.85;
+      font-size: 0.9rem;
+    }
+
+    /* Navigation */
+    .nav-bar {
+      background: #1a3a4c;
+      padding: 0.8rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-bar a {
+      color: #ffd966;
+      margin: 0 1.2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-bar a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+      flex: 1;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .hero-section h1 {
+      color: #0a2f44;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-section p {
+      color: #4a5568;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    .badge-container {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: #e2e8f0;
+      color: #2d3748;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .badge-primary {
+      background: #0a2f44;
+      color: white;
+    }
+
+    .badge-accent {
+      background: #2c8f6e;
+      color: white;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 1px solid #e2e8f0;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .card h3 {
+      color: #0a2f44;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card p, .card li {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    .card ul, .card ol {
+      margin-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .card li {
+      margin: 0.5rem 0;
+    }
+
+    /* Code Block */
+    .code-block {
+      background: #1a202c;
+      color: #a0aec0;
+      padding: 1rem;
+      border-radius: 0.8rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    code {
+      background: #e2e8f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.4rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #0a2f44;
+    }
+
+    pre {
+      background: #1a202c;
+      padding: 1rem;
+      border-radius: 0.8rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: transparent;
+      color: #a0aec0;
+      padding: 0;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #2c8f6e;
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #1f6e54;
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: #0a2f44;
+    }
+
+    .btn-primary:hover {
+      background: #1a4b66;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    /* Table Styles */
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .specs-table th, .specs-table td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .specs-table th {
+      background: #f1f5f9;
+      color: #0a2f44;
+      font-weight: 600;
+    }
+
+    .specs-table tr:hover {
+      background: #f8fafc;
+    }
+
+    /* Footer */
+    .main-footer {
+      background: #0a2f44;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: auto;
+    }
+
+    .main-footer p {
+      opacity: 0.8;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      .hero-section {
+        padding: 1.5rem;
+      }
+      .hero-section h1 {
+        font-size: 1.6rem;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-bar a {
+        margin: 0 0.8rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-header">
+    <h1>📄 CoverCraft Studio</h1>
+    <p>Professional PDF Cover Page Generator</p>
+  </div>
+  <div class="nav-bar">
+    <a href="index.html">🏠 Home</a>
+    <a href="project.html">📄 Standard Cover</a>
+    <a href="project2.html">🎓 Final Cover</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="documentation.html" style="color: white;">📖 Documentation</a>
+  </div>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1>📖 Project Documentation</h1>
+      <p>Complete technical documentation for the CoverCraft PDF Cover Page Generator. Learn about the architecture, features, specifications, and how to customize the system for your needs.</p>
+      <div class="badge-container">
+        <span class="badge badge-primary">Version 2.0</span>
+        <span class="badge badge-accent">jsPDF v2.5.1</span>
+        <span class="badge">Pure Frontend</span>
+        <span class="badge">No Server Required</span>
+      </div>
+      <div class="btn-group">
+        <a href="project.html" class="btn">🚀 Launch Standard Cover</a>
+        <a href="project2.html" class="btn btn-primary">🎓 Launch Final Cover</a>
+      </div>
+    </div>
+
+    <!-- Overview Card -->
+    <div class="card-grid">
+      <div class="card">
+        <h3>📌 Project Overview</h3>
+        <p><strong>CoverCraft</strong> is a pure front-end web application that generates professional PDF cover pages directly in the browser. Built with HTML5, CSS3, and JavaScript, it uses the jsPDF library to create print-ready A4 documents with precise measurements following MS Word specifications.</p>
+        <p style="margin-top: 0.8rem;">The application requires no server-side processing - all PDF generation happens locally in the user's browser, ensuring privacy and fast performance.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Key Features</h3>
+        <ul>
+          <li><strong>Two Generator Versions:</strong> Standard cover page and Final cover page with dual logos</li>
+          <li><strong>Live Preview:</strong> Real-time PDF preview inside an iframe</li>
+          <li><strong>One-Click Download:</strong> Export as high-quality A4 PDF</li>
+          <li><strong>Logo Upload:</strong> Support for custom college logos (resized automatically)</li>
+          <li><strong>Optional Fields:</strong> Date field appears only when filled</li>
+          <li><strong>Responsive Design:</strong> Works on desktop, tablet, and mobile devices</li>
+          <li><strong>MS Word Margins:</strong> 1" top/bottom, 1.25" left/right</li>
+          <li><strong>Times New Roman Font:</strong> Professional academic appearance</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Technical Specifications -->
+    <div class="card">
+      <h3>📏 Technical Specifications</h3>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Parameter</th><th>Standard Cover</th><th>Final Cover</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Page Size</td><td colspan="2">A4 (210 × 297 mm)</td></tr>
+          <tr><td>Top/Bottom Margin</td><td colspan="2">25.4 mm (1 inch)</td></tr>
+          <tr><td>Left/Right Margin</td><td colspan="2">31.75 mm (1.25 inches)</td></tr>
+          <tr><td>College Name Font</td><td>Times Bold, 24 pt</td><td>Times Bold, 18 pt</td></tr>
+          <tr><td>Address/Affiliation Font</td><td>Times Normal, 12 pt</td><td>Times Normal, 12 pt</td></tr>
+          <tr><td>Title Font</td><td>Times Bold, 18 pt</td><td>Times Bold, 18 pt</td></tr>
+          <tr><td>Body Text Font</td><td>Times, 14 pt</td><td>Times, 14 pt</td></tr>
+          <tr><td>Logo Size</td><td>55 × 65 mm</td><td>30 × 30 mm (each, two logos)</td></tr>
+          <tr><td>Line Spacing</td><td>1.5 lines (21 pt)</td><td>1.5 lines (21 pt)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Generator Versions -->
+    <div class="card-grid">
+      <div class="card">
+        <h3>📄 Standard Cover Page</h3>
+        <p>Single logo version designed for basic cover page needs. Includes:</p>
+        <ul>
+          <li>Centered college name</li>
+          <li>Single college logo (75×65 mm)</li>
+          <li>Lab report title with underline</li>
+          <li>Two-column submission details</li>
+          <li>Optional date field</li>
+        </ul>
+        <div class="btn-group" style="margin-top: 1rem;">
+          <a href="project.html" class="btn">Launch Standard Cover</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎓 Final Cover Page</h3>
+        <p>Advanced version with dual logos and decorative line support:</p>
+        <ul>
+          <li>Two logos (30×30 mm each) - left and right</li>
+          <li>College name centered between logos</li>
+          <li>Full address and affiliation lines</li>
+          <li>Uploadable decorative project line image</li>
+          <li>Complete submission details (student + teacher)</li>
+          <li>Default fallback image support (project-line.png)</li>
+        </ul>
+        <div class="btn-group" style="margin-top: 1rem;">
+          <a href="project2.html" class="btn btn-primary">Launch Final Cover</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to Use -->
+    <div class="card">
+      <h3>🛠️ How to Use</h3>
+      <ol style="margin-left: 1.5rem; line-height: 1.8;">
+        <li>Choose either <strong>Standard Cover</strong> or <strong>Final Cover</strong> from the navigation menu</li>
+        <li>Fill in all required fields (College Name, Title, Student details, Teacher details)</li>
+        <li>Upload logos (PNG/JPG format recommended)</li>
+        <li>For Final Cover, optionally upload a decorative project line image</li>
+        <li>Click <strong>Preview PDF</strong> to see the generated cover page inside the iframe</li>
+        <li>Review the layout, formatting, and spacing</li>
+        <li>Click <strong>Download PDF</strong> to save the cover page to your device</li>
+        <li>The date field is optional - leave empty to omit from PDF</li>
+      </ol>
+    </div>
+
+    <!-- Customization Guide -->
+    <div class="card">
+      <h3>⚙️ Customization Guide</h3>
+      <p>To modify the generator settings, edit the constants in the JavaScript section of the HTML file:</p>
+      
+      <pre><code>// Page margins (in mm)
+const MARGIN_MM = 25.4;        // Change for different margins
+
+// Font settings
+const COLLEGE_FONT_SIZE_PT = 18;   // Increase for larger college name
+const TITLE_FONT_SIZE_PT = 18;     // Change title font size
+
+// Logo dimensions (Final Cover)
+const LOGO_SIZE_MM = 30;           // Change logo size
+
+// Line spacing
+const BODY_LEADING_PT = 21;        // Change to 14 for single spacing
+
+// Column gap
+const COLUMN_SPACING_MM = 12 * 0.352778;  // Increase for wider gap
+
+// Project line image width
+const maxWidth = 80;               // Change in buildCoverPDF function</code></pre>
+
+      <p style="margin-top: 1rem;"><strong>Key file locations:</strong></p>
+      <ul>
+        <li><code>index.html</code> - Home page with navigation buttons</li>
+        <li><code>project.html</code> - Standard cover page generator</li>
+        <li><code>project2.html</code> - Final cover page generator (two logos)</li>
+        <li><code>contact.html</code> - Contact information page</li>
+        <li><code>documentation.html</code> - This documentation file</li>
+      </ul>
+    </div>
+
+    <!-- Default Images -->
+    <div class="card">
+      <h3>🖼️ Default Images Setup</h3>
+      <p>The Final Cover Page generator supports default images that load automatically when no file is uploaded:</p>
+      <ul>
+        <li><strong>project-line.png</strong> - Place in the same folder as <code>project2.html</code> for a default decorative line image</li>
+        <li>Supported formats: PNG, JPEG</li>
+        <li>If no default image is found, a dashed fallback line is drawn</li>
+      </ul>
+      <div class="code-block">
+        📁 Project Folder Structure:<br>
+        ├── index.html<br>
+        ├── project.html<br>
+        ├── project2.html<br>
+        ├── documentation.html<br>
+        ├── contact.html<br>
+        └── project-line.png (optional - default decorative line)
+      </div>
+    </div>
+
+    <!-- Browser Support -->
+    <div class="card">
+      <h3>🌐 Browser Support</h3>
+      <ul>
+        <li>✅ Google Chrome (recommended)</li>
+        <li>✅ Mozilla Firefox</li>
+        <li>✅ Microsoft Edge</li>
+        <li>✅ Safari (latest version)</li>
+        <li>✅ Opera</li>
+      </ul>
+      <p style="margin-top: 0.8rem;">The application requires JavaScript enabled and supports all modern browsers with ES6+ features.</p>
+    </div>
+
+    <!-- Troubleshooting -->
+    <div class="card">
+      <h3>⚠️ Troubleshooting</h3>
+      <ul>
+        <li><strong>Logo not appearing?</strong> - Use the upload button instead of local file paths. Uploaded images work 100% of the time.</li>
+        <li><strong>CORS errors?</strong> - Always use the file upload feature rather than trying to load local files directly.</li>
+        <li><strong>Preview not showing?</strong> - Click "Preview PDF" after filling all fields. If still not working, check browser console for errors.</li>
+        <li><strong>Text overlapping?</strong> - Adjust the spacing values in the constants section (SUB_LEADING_MM, TITLE_LEADING_MM, etc.)</li>
+        <li><strong>Logo size issues?</strong> - Modify LOGO_WIDTH_MM and LOGO_HEIGHT_MM constants.</li>
+      </ul>
+    </div>
+
+    <!-- Credits -->
+    <div class="card">
+      <h3>🙏 Credits & Acknowledgments</h3>
+      <ul>
+        <li><strong>jsPDF</strong> - PDF generation library (<a href="https://github.com/parallax/jsPDF" target="_blank" style="color: #2c8f6e;">github.com/parallax/jsPDF</a>)</li>
+        <li><strong>Fonts:</strong> Times New Roman, Inter, Segoe UI</li>
+        <li><strong>Icons:</strong> Emoji-based icons for visual clarity</li>
+        <li><strong>Design:</strong> Custom CSS with modern card-based layout</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="main-footer">
+    <p>© 2026 Milan Magar – CoverCraft Studio | Professional PDF Cover Page Generator</p>
+    <p style="font-size: 0.75rem; margin-top: 0.3rem;">Built with jsPDF | No data stored | All processing done locally</p>
+  </div>
+</body>
+</html>
