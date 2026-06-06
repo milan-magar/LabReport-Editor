@@ -4,55 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation | CoverCraft Studio</title>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: 'Inter', sans-serif; background: #f4f7fc; display: flex; flex-direction: column; min-height: 100vh; }
-    header, footer { background: #1f2b3c; color: white; text-align: center; padding: 1.2rem; }
-    nav a { color: #ffd966; margin: 0 1rem; text-decoration: none; font-weight: 500; }
-    nav a:hover { text-decoration: underline; }
-    .container { max-width: 900px; margin: 2rem auto; background: white; padding: 2rem; border-radius: 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-    h1 { color: #1f2b3c; margin-top: 0; padding-bottom: 10px; }
-    h2 { color: #1f2b3c; margin-top: 1.5rem; padding-bottom: 10px; }
-    p, li { line-height: 1.6; color: #2c3e66; }
-    ul { margin-left: 2rem; }
-    code { background: #eef2f6; padding: 0.2rem 0.4rem; border-radius: 8px; font-family: monospace; }
-    footer { margin-top: auto; }
-    .footer { color: white; }
-    .project-link {
-      display: inline-block;
-      background: #2c8f6e;
-      color: white;
-      padding: 0.5rem 1.2rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      margin: 0.5rem 0.5rem 0 0;
-      font-weight: 600;
-      transition: 0.2s;
-    }
-    .project-link:hover {
-      background: #1f6e54;
-      transform: translateY(-2px);
-    }
-    .project-link.final {
-      background: #0a2f44;
-    }
-    .project-link.final:hover {
-      background: #1a4b66;
-    }
-    .links-section {
-      margin: 1.5rem 0;
-      padding: 1rem;
-      background: #f0f4f8;
-      border-radius: 1rem;
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
+<div class="main-header">
   <h2>📄 Milan Magar</h2>
-  <nav><a href="index.html">Home</a> <a href="project.html">Project</a> <a href="project2.html">Final</a> <a href="contact.html">Contact</a> <a href="documentation.html">Documentation</a></nav>
-</header>
+  <div class="nav-bar">
+    <nav><a href="index.html">Home</a> <a href="project.html">Project</a> <a href="project2.html">Final</a> <a href="contact.html">Contact</a> <a href="documentation.html">Documentation</a></nav>
+  </div>
+</div>
 <div class="container">
   <h1>📖 How CoverCraft Works</h1>
   <p><strong>CoverCraft</strong> is a pure front‑end tool that generates custom PDF cover pages using <code>jsPDF</code>. No server, no uploads – everything runs locally in your browser.</p>
@@ -89,6 +49,7 @@
   <h2>🚀 Future plans</h2>
   <p>More cover templates, background patterns, additional font choices, and export options (PNG, SVG). Contributions are welcome!</p>
 </div>
-<footer><p class="footer">© 2026 Milan Magar – CoverCraft Studio</p></footer>
+<<div class="main-header">><p class="footer">© 2026 Milan Magar – CoverCraft Studio</p></div>
+<script src="shared.js"></script>
 </body>
 </html>
