@@ -2,277 +2,519 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cover Page – Clean Layout (No Labels)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>CoverCraft Pro – Lab Report Cover Page (No Labels)</title>
+  <!-- jsPDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #eef2f5; font-family: 'Segoe UI', Roboto, sans-serif; padding: 2rem 1.5rem; }
-    .app-card { max-width: 1400px; margin: 0 auto; background: white; border-radius: 2rem; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15); overflow: hidden; }
-    .header-bar { background: #0a2f44; color: white; padding: 1rem 2rem; text-align: center; }
-    .dashboard { display: flex; flex-wrap: wrap; gap: 1.8rem; padding: 2rem; }
-    .form-panel { flex: 1.2; min-width: 280px; background: #fefefe; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .preview-panel { flex: 1.8; min-width: 380px; background: #f8fafc; border-radius: 1.5rem; padding: 1rem; display: flex; flex-direction: column; }
-    .preview-container { background: #eef2f5; border-radius: 1.2rem; padding: 1rem; min-height: 900px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-    iframe { width: 100%; height: 900px; border: none; border-radius: 0.8rem; background: white; }
-    .empty-preview { text-align: center; color: #2c5f7a; background: white; padding: 2rem; border-radius: 1rem; }
-    .form-group { margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-weight: 700; color: #0a2f44; font-size: 0.8rem; text-transform: uppercase; }
-    input, select { padding: 0.7rem 1rem; border: 1.5px solid #dce5ef; border-radius: 1rem; font-size: 0.9rem; }
-    .btn-row { display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; }
-    .btn { border: none; padding: 0.7rem 1.6rem; border-radius: 2rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-    .btn-primary { background: #0a2f44; color: white; }
-    .btn-accent { background: #2c8f6e; color: white; }
-    footer { text-align: center; padding: 1rem; background: #f0f4f8; font-size: 0.75rem; border-top: 1px solid #dee6ef; }
-    .logo-thumb { margin-top: 8px; max-width: 100px; max-height: 60px; border: 1px solid #ccc; border-radius: 8px; padding: 4px; background: white; display: none; }
-    
-    /* Mobile responsive - smaller iframe height */
-    @media (max-width: 768px) {
-      .preview-container { min-height: 550px; }
-      iframe { height: 550px; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    
-    @media (max-width: 780px) { body { padding: 1rem; } .dashboard { padding: 1rem; } }
+
+    body {
+      background: #e9f0f5;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem 1.5rem;
+    }
+
+    /* custom font fallback for Times New Roman inside PDF only - UI stays modern */
+    .app-card {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 2rem;
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .header-bar {
+      background: linear-gradient(135deg, #0a2f44 0%, #123e5a 100%);
+      color: white;
+      padding: 1.2rem 2rem;
+      text-align: center;
+    }
+
+    .header-bar h1 {
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      font-size: 1.8rem;
+    }
+
+    .header-bar p {
+      opacity: 0.85;
+      font-size: 0.85rem;
+      margin-top: 6px;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      padding: 2rem;
+    }
+
+    .form-panel {
+      flex: 1.2;
+      min-width: 280px;
+      background: #ffffff;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05);
+      border: 1px solid #eef2f8;
+    }
+
+    .preview-panel {
+      flex: 1.8;
+      min-width: 380px;
+      background: #f7fafd;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .preview-container {
+      background: #eef2f7;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      min-height: 900px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: 0.2s;
+    }
+
+    iframe {
+      width: 100%;
+      height: 900px;
+      border: none;
+      border-radius: 0.8rem;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .empty-preview {
+      text-align: center;
+      color: #2c5f7a;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1.2rem;
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-weight: 700;
+      color: #0a2f44;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input, select {
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      background: #fefefe;
+      transition: 0.15s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2c8f6e;
+      box-shadow: 0 0 0 2px rgba(44, 143, 110, 0.2);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      padding: 0.7rem 1.6rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+
+    .btn-primary {
+      background: #0a2f44;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #134b66;
+      transform: translateY(-1px);
+    }
+
+    .btn-accent {
+      background: #2c8f6e;
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: #237a5c;
+      transform: translateY(-1px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f8fafd;
+      font-size: 0.7rem;
+      border-top: 1px solid #e2edf7;
+      color: #4b6f86;
+    }
+
+    .logo-thumb {
+      margin-top: 8px;
+      max-width: 90px;
+      max-height: 70px;
+      border: 1px solid #cfdfed;
+      border-radius: 10px;
+      padding: 4px;
+      background: white;
+      display: none;
+      object-fit: contain;
+    }
+
+    hr {
+      margin: 1rem 0;
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, #dce5ef, transparent);
+    }
+
+    small {
+      font-size: 0.7rem;
+      color: #5e7e99;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 1rem;
+      }
+      .dashboard {
+        padding: 1rem;
+      }
+      .preview-container {
+        min-height: 550px;
+      }
+      iframe {
+        height: 550px;
+      }
+    }
   </style>
 </head>
 <body>
 <div class="app-card">
   <div class="header-bar">
     <h1>📄 CoverCraft – Clean Layout (No Labels)</h1>
-    <p>Margins 1″ · Logo 75×65 mm · Times New Roman · Optional date</p>
+    <p>Margins 1″ · Logo 55×65 mm · Times New Roman · Optional date | Subject field added</p>
   </div>
   <div class="dashboard">
     <div class="form-panel">
-      <div class="form-group"><label>🏛️ College Name (top)</label><input type="text" id="collegeName" value="TRINITY INTERNATIONAL COLLEGE"></div>
+      <!-- Top fields -->
+      <div class="form-group"><label>🏛️ College Name (top section)</label><input type="text" id="collegeName" value="TRINITY INTERNATIONAL COLLEGE"></div>
       <div class="form-group">
-        <label>🖼️ College Logo (Upload)</label>
+        <label>🖼️ College Logo (Upload, resized 55×65 mm)</label>
         <input type="file" id="logoUpload" accept="image/*">
-        <img id="logoThumb" class="logo-thumb" alt="Preview">
-        <small>Resized to 75 mm × 65 mm</small>
+        <img id="logoThumb" class="logo-thumb" alt="Logo preview">
+        <small>Optimal: PNG or JPEG, will fit 55x65mm</small>
       </div>
       <div class="form-group"><label>📘 Lab Report Title</label><input type="text" id="reportName" value="Lab Report on Structures, Unions and Enumerations"></div>
       
-      <!-- Left column fields (no labels in PDF) -->
-      <div class="form-group"><label>👤 Name (Student)</label><input type="text" id="studentName" value="Milan Magar"></div>
+      <!-- Left column fields -->
+      <div class="form-group"><label>👤 Student Name</label><input type="text" id="studentName" value="Milan Magar"></div>
       <div class="form-group"><label>🎓 Program & Semester</label><input type="text" id="programSemester" value="BCA, 1st Semester"></div>
       <div class="form-group"><label>🔢 Roll No.</label><input type="text" id="rollNo" value="11"></div>
       
-      <!-- Right column fields -->
+      <!-- Right column fields (includes new subject) -->
       <div class="form-group"><label>👨‍🏫 Teacher Name</label><input type="text" id="teacherName" value="Abiral KC"></div>
-      <div class="form-group"><label>🏢 Subject</label><input type="text" id="department" value="Discrete Structure"></div>
+      
+      <!-- NEW SUBJECT FIELD (added as requested) -->
+      <div class="form-group"><label>📖 Subject Name</label><input type="text" id="subjectName" value="OOP in Java"></div>
+      
       <div class="form-group"><label>🏢 Department</label><input type="text" id="department" value="Department of BCA"></div>
       <div class="form-group"><label>🏛️ College Name (right column)</label><input type="text" id="collegeRight" value="Trinity International College"></div>
       
       <div class="form-group"><label>📅 Submission Date (optional)</label><input type="text" id="date" placeholder="Leave empty to omit" value="03/20/2026"></div>
       
-      <div class="btn-row"><button class="btn btn-accent" id="previewBtn">👁️ Preview PDF</button><button class="btn btn-primary" id="downloadBtn">⬇️ Download PDF</button></div>
-      <hr><small>✔ Labels removed in PDF – only values shown. Date appears only if filled.</small>
+      <div class="btn-row">
+        <button class="btn btn-accent" id="previewBtn">👁️ Preview PDF</button>
+        <button class="btn btn-primary" id="downloadBtn">⬇️ Download PDF</button>
+      </div>
+      <hr>
+      <small>✔ PDF includes NO field labels – only the values you entered. Subject field appears under teacher. Date is optional.</small>
     </div>
     <div class="preview-panel">
       <div class="preview-container" id="previewContainer">
-        <div id="emptyPreviewMsg" class="empty-preview">🖼️ Click <strong>Preview PDF</strong> to generate cover page</div>
+        <div id="emptyPreviewMsg" class="empty-preview">🖼️ Click <strong>Preview PDF</strong> to generate cover page (Times New Roman, exact dimensions)</div>
         <iframe id="pdfIframe" style="display: none;"></iframe>
       </div>
     </div>
   </div>
-  <footer>© Milan Magar – Clean layout, optional date, exact dimensions</footer>
+  <footer>© Milan Magar – CoverCraft • A4 • 1″ margins • Logo 55x65mm • Subject included • No labels shown</footer>
 </div>
 
 <script>
-  // DOM elements
-  const collegeNameInput = document.getElementById('collegeName');
-  const logoUpload = document.getElementById('logoUpload');
-  const logoThumb = document.getElementById('logoThumb');
-  const reportNameInput = document.getElementById('reportName');
-  const studentNameInput = document.getElementById('studentName');
-  const programSemesterInput = document.getElementById('programSemester');
-  const rollNoInput = document.getElementById('rollNo');
-  const teacherNameInput = document.getElementById('teacherName');
-  const departmentInput = document.getElementById('department');
-  const collegeRightInput = document.getElementById('collegeRight');
-  const dateInput = document.getElementById('date');
-  const previewBtn = document.getElementById('previewBtn');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const pdfIframe = document.getElementById('pdfIframe');
-  const emptyPreviewMsgDiv = document.getElementById('emptyPreviewMsg');
-
-  let uploadedLogoData = null;
-  let uploadedLogoFormat = null;
-
-  logoUpload.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        uploadedLogoData = ev.target.result;
-        uploadedLogoFormat = file.type === 'image/jpeg' ? 'JPEG' : 'PNG';
-        logoThumb.src = uploadedLogoData;
-        logoThumb.style.display = 'block';
-      };
-      reader.readAsDataURL(file);
-    } else {
-      uploadedLogoData = null;
-      logoThumb.style.display = 'none';
-    }
-  });
-
-  // ========== EXACT MEASUREMENTS FROM SPEC ==========
-  const MARGIN_MM = 25.4;        // 1 inch all sides
-  const PAGE_WIDTH_MM = 210;
-  const CONTENT_WIDTH_MM = PAGE_WIDTH_MM - 2 * MARGIN_MM; // 159.2 mm
-  const LOGO_WIDTH_MM = 55;
-  const LOGO_HEIGHT_MM = 65;
-  const FONT_FAMILY = "times";
-
-  const COLLEGE_FONT_SIZE_PT = 24;
-  const TITLE_FONT_SIZE_PT = 18;
-  const TITLE_LEADING_PT = 24;    // 2.0 lines (double spacing)
-  const TITLE_LEADING_MM = TITLE_LEADING_PT * 0.352778;
-  const BODY_FONT_SIZE_PT = 14;
-  const BODY_LEADING_PT = 21;     // 1.5 lines (was 1.15)
-  const BODY_LEADING_MM = BODY_LEADING_PT * 0.352778;
-
-  function sanitizeFields() {
-    if (!collegeNameInput.value.trim()) collegeNameInput.value = "TRINITY INTERNATIONAL COLLEGE";
-    if (!reportNameInput.value.trim()) reportNameInput.value = "Lab Report on Structures, Unions and Enumerations";
-    if (!studentNameInput.value.trim()) studentNameInput.value = "Milan Magar";
-    if (!programSemesterInput.value.trim()) programSemesterInput.value = "BCA, 1st Semester";
-    if (!rollNoInput.value.trim()) rollNoInput.value = "11";
-    if (!teacherNameInput.value.trim()) teacherNameInput.value = "Abiral KC";
-    if (!departmentInput.value.trim()) departmentInput.value = "Department of BCA";
-    if (!collegeRightInput.value.trim()) collegeRightInput.value = "Trinity International College";
-    // date is optional, no default
-  }
-
-  async function buildCoverPDF() {
-    sanitizeFields();
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-    doc.setFillColor(255,255,255);
-    doc.rect(0, 0, PAGE_WIDTH_MM, 297, 'F');
-
-    const collegeName = collegeNameInput.value.trim().toUpperCase();
-    const reportName = reportNameInput.value.trim();
-    const studentName = studentNameInput.value.trim();
-    const programSemester = programSemesterInput.value.trim();
-    const rollNo = rollNoInput.value.trim();
-    const teacherName = teacherNameInput.value.trim();
-    const department = departmentInput.value.trim();
-    const collegeRight = collegeRightInput.value.trim();
-    const submissionDate = dateInput.value.trim();
-
-    const contentX = MARGIN_MM;
-    const contentCenterX = contentX + CONTENT_WIDTH_MM / 2;
-    let currentY = MARGIN_MM;
-
-    // College name (bold, centered)
-    doc.setFont(FONT_FAMILY, "bold");
-    doc.setFontSize(COLLEGE_FONT_SIZE_PT);
-    const collegeLines = doc.splitTextToSize(collegeName, CONTENT_WIDTH_MM);
-    doc.text(collegeLines, contentCenterX, currentY, { align: "center" });
-    const collegeLineHeightMM = COLLEGE_FONT_SIZE_PT * 1.2 * 0.352778;
-    currentY += collegeLines.length * collegeLineHeightMM + 5;
-
-    // Logo (75x65 mm)
-    if (uploadedLogoData && uploadedLogoFormat) {
-      try {
-        const imgX = contentCenterX - LOGO_WIDTH_MM / 2;
-        doc.addImage(uploadedLogoData, uploadedLogoFormat, imgX, currentY, LOGO_WIDTH_MM, LOGO_HEIGHT_MM);
-        currentY += LOGO_HEIGHT_MM + 25;
-      } catch (err) {
-        doc.setFont(FONT_FAMILY, "normal");
-        doc.setFontSize(10);
-        doc.text("[Logo missing]", contentCenterX, currentY + 10, { align: "center" });
-        currentY += 15;
+  (function() {
+    // DOM elements mapping
+    const collegeNameInput = document.getElementById('collegeName');
+    const logoUpload = document.getElementById('logoUpload');
+    const logoThumb = document.getElementById('logoThumb');
+    const reportNameInput = document.getElementById('reportName');
+    const studentNameInput = document.getElementById('studentName');
+    const programSemesterInput = document.getElementById('programSemester');
+    const rollNoInput = document.getElementById('rollNo');
+    const teacherNameInput = document.getElementById('teacherName');
+    const subjectNameInput = document.getElementById('subjectName');    // <-- NEW subject field
+    const departmentInput = document.getElementById('department');
+    const collegeRightInput = document.getElementById('collegeRight');
+    const dateInput = document.getElementById('date');
+    
+    const previewBtn = document.getElementById('previewBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const pdfIframe = document.getElementById('pdfIframe');
+    const emptyPreviewMsgDiv = document.getElementById('emptyPreviewMsg');
+    
+    let uploadedLogoData = null;
+    let uploadedLogoFormat = null;
+    
+    // Logo upload handler
+    logoUpload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          uploadedLogoData = ev.target.result;
+          // Determine format for jsPDF
+          if (file.type === 'image/jpeg' || file.type === 'image/jpg') uploadedLogoFormat = 'JPEG';
+          else if (file.type === 'image/png') uploadedLogoFormat = 'PNG';
+          else uploadedLogoFormat = 'JPEG'; // fallback
+          logoThumb.src = uploadedLogoData;
+          logoThumb.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        uploadedLogoData = null;
+        logoThumb.style.display = 'none';
       }
-    } else {
-      doc.setFont(FONT_FAMILY, "normal");
-      doc.setFontSize(10);
-      doc.text("(Upload logo)", contentCenterX, currentY + 10, { align: "center" });
-      currentY += 20;
+    });
+    
+    // Sanitize fields to avoid empty content
+    function sanitizeFields() {
+      if (!collegeNameInput.value.trim()) collegeNameInput.value = "TRINITY INTERNATIONAL COLLEGE";
+      if (!reportNameInput.value.trim()) reportNameInput.value = "Lab Report on Structures, Unions and Enumerations";
+      if (!studentNameInput.value.trim()) studentNameInput.value = "Milan Magar";
+      if (!programSemesterInput.value.trim()) programSemesterInput.value = "BCA, 1st Semester";
+      if (!rollNoInput.value.trim()) rollNoInput.value = "11";
+      if (!teacherNameInput.value.trim()) teacherNameInput.value = "Abiral KC";
+      if (!subjectNameInput.value.trim()) subjectNameInput.value = "OOP in Java";   // default subject
+      if (!departmentInput.value.trim()) departmentInput.value = "Department of BCA";
+      if (!collegeRightInput.value.trim()) collegeRightInput.value = "Trinity International College";
+      // date optional - no default
     }
-
-    // Lab report title
-    doc.setFont(FONT_FAMILY, "bold");
-    doc.setFontSize(TITLE_FONT_SIZE_PT);
-    const titleLines = doc.splitTextToSize(reportName, CONTENT_WIDTH_MM);
-    doc.text(titleLines, contentCenterX, currentY, { align: "center" });
-    currentY += titleLines.length * TITLE_LEADING_MM + 20;
-
-    // Two columns – NO LABELS, just values
-    const columnGap = 46;
-    const columnWidth = (CONTENT_WIDTH_MM - columnGap) / 2;
-    const leftColX = contentX;
-    const rightColX = contentX + columnWidth + columnGap;
-
-    let leftY = currentY;
-    let rightY = currentY;
-
-    // ===== LEFT COLUMN =====
-    doc.setFont(FONT_FAMILY, "bold");
-    doc.setFontSize(BODY_FONT_SIZE_PT);
-    doc.text("Submitted By:", leftColX, leftY);
-    leftY += BODY_LEADING_MM + 2;
-
-    doc.setFont(FONT_FAMILY, "normal");
-    doc.text(studentName, leftColX, leftY); leftY += BODY_LEADING_MM;
-    doc.text(programSemester, leftColX, leftY); leftY += BODY_LEADING_MM;
-    doc.text(`Roll No: ${rollNo}`, leftColX, leftY); leftY += BODY_LEADING_MM;
-
-    // ===== RIGHT COLUMN =====
-    doc.setFont(FONT_FAMILY, "bold");
-    doc.text("Submitted To:", rightColX, rightY);
-    rightY += BODY_LEADING_MM + 2;
-
-    doc.setFont(FONT_FAMILY, "normal");
-    doc.text(teacherName, rightColX, rightY); rightY += BODY_LEADING_MM;
-    doc.text(department, rightColX, rightY); rightY += BODY_LEADING_MM;
-    doc.text(collegeRight, rightColX, rightY); rightY += BODY_LEADING_MM;
-
-    const maxBottom = Math.max(leftY, rightY);
-    currentY = maxBottom + 12;
-
-    // Optional date (only if not empty)
-    if (submissionDate !== "") {
-      doc.setFont(FONT_FAMILY, "normal");
+    
+    // ========== EXACT MEASUREMENTS (mm) ==========
+    const MARGIN_MM = 25.4;          // 1 inch
+    const PAGE_WIDTH_MM = 210;
+    const CONTENT_WIDTH_MM = PAGE_WIDTH_MM - 2 * MARGIN_MM; // 159.2 mm
+    const LOGO_WIDTH_MM = 55;
+    const LOGO_HEIGHT_MM = 65;
+    const FONT_FAMILY = "times";
+    
+    const COLLEGE_FONT_SIZE_PT = 24;
+    const TITLE_FONT_SIZE_PT = 18;
+    const TITLE_LEADING_PT = 24;      // double spacing for title
+    const TITLE_LEADING_MM = TITLE_LEADING_PT * 0.352778;
+    const BODY_FONT_SIZE_PT = 14;
+    const BODY_LEADING_PT = 21;       // 1.5 lines approx
+    const BODY_LEADING_MM = BODY_LEADING_PT * 0.352778;
+    
+    // Core PDF generation: clean no labels
+    async function buildCoverPDF() {
+      sanitizeFields();
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+      
+      // white background
+      doc.setFillColor(255, 255, 255);
+      doc.rect(0, 0, PAGE_WIDTH_MM, 297, 'F');
+      
+      // Gather values
+      const collegeName = collegeNameInput.value.trim().toUpperCase();
+      const reportName = reportNameInput.value.trim();
+      const studentName = studentNameInput.value.trim();
+      const programSemester = programSemesterInput.value.trim();
+      const rollNo = rollNoInput.value.trim();
+      const teacherName = teacherNameInput.value.trim();
+      const subjectName = subjectNameInput.value.trim();     // subject value
+      const department = departmentInput.value.trim();
+      const collegeRight = collegeRightInput.value.trim();
+      const submissionDate = dateInput.value.trim();
+      
+      const contentX = MARGIN_MM;
+      const contentCenterX = contentX + CONTENT_WIDTH_MM / 2;
+      let currentY = MARGIN_MM;
+      
+      // 1) College name (bold, centered)
+      doc.setFont(FONT_FAMILY, "bold");
+      doc.setFontSize(COLLEGE_FONT_SIZE_PT);
+      const collegeLines = doc.splitTextToSize(collegeName, CONTENT_WIDTH_MM);
+      doc.text(collegeLines, contentCenterX, currentY, { align: "center" });
+      const collegeLineHeightMM = COLLEGE_FONT_SIZE_PT * 1.2 * 0.352778;
+      currentY += collegeLines.length * collegeLineHeightMM + 5;
+      
+      // 2) Logo (55x65 mm centered)
+      if (uploadedLogoData && uploadedLogoFormat) {
+        try {
+          const imgX = contentCenterX - LOGO_WIDTH_MM / 2;
+          doc.addImage(uploadedLogoData, uploadedLogoFormat, imgX, currentY, LOGO_WIDTH_MM, LOGO_HEIGHT_MM);
+          currentY += LOGO_HEIGHT_MM + 25;
+        } catch (err) {
+          // fallback text if image fails
+          doc.setFont(FONT_FAMILY, "normal");
+          doc.setFontSize(10);
+          doc.text("[Logo could not be embedded]", contentCenterX, currentY + 10, { align: "center" });
+          currentY += 20;
+        }
+      } else {
+        doc.setFont(FONT_FAMILY, "italic");
+        doc.setFontSize(10);
+        doc.text("(Upload college logo)", contentCenterX, currentY + 10, { align: "center" });
+        currentY += 20;
+      }
+      
+      // 3) Lab report title (bold, double spaced)
+      doc.setFont(FONT_FAMILY, "bold");
+      doc.setFontSize(TITLE_FONT_SIZE_PT);
+      const titleLines = doc.splitTextToSize(reportName, CONTENT_WIDTH_MM);
+      doc.text(titleLines, contentCenterX, currentY, { align: "center" });
+      currentY += titleLines.length * TITLE_LEADING_MM + 20;
+      
+      // 4) Two columns — NO LABELS, only raw values.
+      const columnGap = 46;
+      const columnWidth = (CONTENT_WIDTH_MM - columnGap) / 2;
+      const leftColX = contentX;
+      const rightColX = contentX + columnWidth + columnGap;
+      
+      let leftY = currentY;
+      let rightY = currentY;
+      
+      // ----- LEFT COLUMN: "Submitted By" is just a heading (still no label for fields)
+      // We use minimalist heading: "Submitted By" as a category (but no colon or extra label for each field)
+      doc.setFont(FONT_FAMILY, "bold");
       doc.setFontSize(BODY_FONT_SIZE_PT);
-      doc.text(submissionDate, contentCenterX, currentY, { align: "center" });
+      doc.text("Submitted By", leftColX, leftY);
+      leftY += BODY_LEADING_MM + 2;
+      
+      doc.setFont(FONT_FAMILY, "normal");
+      doc.text(studentName, leftColX, leftY); leftY += BODY_LEADING_MM;
+      doc.text(programSemester, leftColX, leftY); leftY += BODY_LEADING_MM;
+      doc.text(`Roll No: ${rollNo}`, leftColX, leftY); leftY += BODY_LEADING_MM;
+      
+      // ----- RIGHT COLUMN: "Submitted To" heading (no extra labels)
+      doc.setFont(FONT_FAMILY, "bold");
+      doc.text("Submitted To", rightColX, rightY);
+      rightY += BODY_LEADING_MM + 2;
+      
+      doc.setFont(FONT_FAMILY, "normal");
+      doc.text(teacherName, rightColX, rightY); rightY += BODY_LEADING_MM;
+      // NEW: Subject appears directly after Teacher name (as requested)
+      doc.text(subjectName, rightColX, rightY); rightY += BODY_LEADING_MM;
+      doc.text(department, rightColX, rightY); rightY += BODY_LEADING_MM;
+      doc.text(collegeRight, rightColX, rightY); rightY += BODY_LEADING_MM;
+      
+      const maxBottom = Math.max(leftY, rightY);
+      currentY = maxBottom + 12;
+      
+      // Optional date (centered, only if provided)
+      if (submissionDate !== "") {
+        doc.setFont(FONT_FAMILY, "normal");
+        doc.setFontSize(BODY_FONT_SIZE_PT);
+        doc.text(submissionDate, contentCenterX, currentY, { align: "center" });
+      }
+      
+      return doc;
     }
-
-    return doc;
-  }
-
-  async function updatePreview() {
-    try {
-      if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) URL.revokeObjectURL(pdfIframe.src);
+    
+    // Preview inside iframe
+    let currentBlobUrl = null;
+    
+    async function updatePreview() {
+      try {
+        if (currentBlobUrl) {
+          URL.revokeObjectURL(currentBlobUrl);
+          currentBlobUrl = null;
+        }
+        if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) {
+          URL.revokeObjectURL(pdfIframe.src);
+        }
+        const doc = await buildCoverPDF();
+        const blob = doc.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        currentBlobUrl = blobUrl;
+        emptyPreviewMsgDiv.style.display = 'none';
+        pdfIframe.style.display = 'block';
+        pdfIframe.src = blobUrl;
+      } catch (err) {
+        console.error(err);
+        emptyPreviewMsgDiv.innerHTML = `<span>⚠️ Preview error: ${err.message}. Please check logo or inputs.</span>`;
+        emptyPreviewMsgDiv.style.display = 'flex';
+        pdfIframe.style.display = 'none';
+      }
+    }
+    
+    async function downloadPDF() {
       const doc = await buildCoverPDF();
-      const blob = doc.output('blob');
-      const blobUrl = URL.createObjectURL(blob);
-      emptyPreviewMsgDiv.style.display = 'none';
-      pdfIframe.style.display = 'block';
-      pdfIframe.src = blobUrl;
-    } catch (err) {
-      emptyPreviewMsgDiv.innerHTML = `<span>⚠️ Preview error: ${err.message}</span>`;
-      emptyPreviewMsgDiv.style.display = 'flex';
-      pdfIframe.style.display = 'none';
+      let fileName = reportNameInput.value.trim().replace(/[^a-z0-9]/gi, '_').slice(0, 40) || "cover_page";
+      doc.save(`Cover_${fileName}.pdf`);
     }
-  }
-
-  async function downloadPDF() {
-    const doc = await buildCoverPDF();
-    const prefix = reportNameInput.value.trim().replace(/[^a-z0-9]/gi, '_').slice(0, 40) || "cover";
-    doc.save(`cover_${prefix}.pdf`);
-  }
-
-  previewBtn.onclick = (e) => { e.preventDefault(); updatePreview(); };
-  downloadBtn.onclick = (e) => { e.preventDefault(); downloadPDF(); };
-  pdfIframe.style.display = 'none';
-  emptyPreviewMsgDiv.style.display = 'flex';
-  window.addEventListener('beforeunload', () => {
-    if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) URL.revokeObjectURL(pdfIframe.src);
-  });
+    
+    // Event listeners
+    previewBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      updatePreview();
+    });
+    
+    downloadBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      downloadPDF();
+    });
+    
+    // initial state: no preview
+    pdfIframe.style.display = 'none';
+    emptyPreviewMsgDiv.style.display = 'flex';
+    
+    // Cleanup blob on page unload
+    window.addEventListener('beforeunload', () => {
+      if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+      if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) URL.revokeObjectURL(pdfIframe.src);
+    });
+    
+    // Optional: set default subject if empty (ensuring field)
+    if (subjectNameInput && subjectNameInput.value.trim() === "") {
+      subjectNameInput.value = "OOP in Java";
+    }
+  })();
 </script>
-<script src="shared.js"></script>
 </body>
 </html>
