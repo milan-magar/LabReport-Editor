@@ -4,68 +4,93 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>CoverCraft Pro – Lab Report Cover Page (No Labels)</title>
-  <!-- jsPDF library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ---- Password overlay ---- */
+    #passwordOverlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10, 47, 68, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-family: 'Inter', sans-serif;
+      backdrop-filter: blur(6px);
     }
+    #passwordBox {
+      background: white;
+      padding: 2.5rem 3rem;
+      border-radius: 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    }
+    #passwordBox h2 { margin-bottom: 0.5rem; color: #0a2f44; }
+    #passwordBox p { color: #555; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    #passwordInput {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid #ddd;
+      border-radius: 1rem;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    #passwordInput:focus { outline: none; border-color: #2c8f6e; }
+    #passwordError { color: #b33; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.5rem; }
+    #passwordBtn {
+      margin-top: 1.2rem;
+      padding: 0.7rem 2rem;
+      border: none;
+      border-radius: 2rem;
+      background: #0a2f44;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #passwordBtn:hover { background: #1a4b66; }
 
+    /* ---- Your original styles (same as before) ---- */
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: #e9f0f5;
       font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
       padding: 2rem 1.5rem;
     }
-
-    /* custom font fallback for Times New Roman inside PDF only - UI stays modern */
     .app-card {
       max-width: 1400px;
       margin: 0 auto;
       background: white;
       border-radius: 2rem;
-      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.2);
       overflow: hidden;
-      transition: all 0.2s;
     }
-
     .header-bar {
       background: linear-gradient(135deg, #0a2f44 0%, #123e5a 100%);
       color: white;
       padding: 1.2rem 2rem;
       text-align: center;
     }
-
-    .header-bar h1 {
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      font-size: 1.8rem;
-    }
-
-    .header-bar p {
-      opacity: 0.85;
-      font-size: 0.85rem;
-      margin-top: 6px;
-    }
-
+    .header-bar h1 { font-weight: 700; font-size: 1.8rem; }
+    .header-bar p { opacity: 0.85; font-size: 0.85rem; margin-top: 6px; }
     .dashboard {
       display: flex;
       flex-wrap: wrap;
       gap: 1.8rem;
       padding: 2rem;
     }
-
     .form-panel {
       flex: 1.2;
       min-width: 280px;
       background: #ffffff;
       border-radius: 1.5rem;
       padding: 1.5rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
       border: 1px solid #eef2f8;
     }
-
     .preview-panel {
       flex: 1.8;
       min-width: 380px;
@@ -75,7 +100,6 @@
       display: flex;
       flex-direction: column;
     }
-
     .preview-container {
       background: #eef2f7;
       border-radius: 1.2rem;
@@ -85,18 +109,15 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      transition: 0.2s;
     }
-
     iframe {
       width: 100%;
       height: 900px;
       border: none;
       border-radius: 0.8rem;
       background: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
     .empty-preview {
       text-align: center;
       color: #2c5f7a;
@@ -104,16 +125,13 @@
       padding: 2.5rem;
       border-radius: 1.2rem;
       font-weight: 500;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-
     .form-group {
       margin-bottom: 1.2rem;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
-
     .form-group label {
       font-weight: 700;
       color: #0a2f44;
@@ -121,29 +139,24 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-
     input, select {
       padding: 0.75rem 1rem;
       border: 1.5px solid #e2e8f0;
       border-radius: 1rem;
       font-size: 0.9rem;
       background: #fefefe;
-      transition: 0.15s;
     }
-
     input:focus {
       outline: none;
       border-color: #2c8f6e;
-      box-shadow: 0 0 0 2px rgba(44, 143, 110, 0.2);
+      box-shadow: 0 0 0 2px rgba(44,143,110,0.2);
     }
-
     .btn-row {
       display: flex;
       gap: 1rem;
       margin-top: 1.5rem;
       flex-wrap: wrap;
     }
-
     .btn {
       border: none;
       padding: 0.7rem 1.6rem;
@@ -153,27 +166,10 @@
       transition: 0.2s;
       font-size: 0.85rem;
     }
-
-    .btn-primary {
-      background: #0a2f44;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #134b66;
-      transform: translateY(-1px);
-    }
-
-    .btn-accent {
-      background: #2c8f6e;
-      color: white;
-    }
-
-    .btn-accent:hover {
-      background: #237a5c;
-      transform: translateY(-1px);
-    }
-
+    .btn-primary { background: #0a2f44; color: white; }
+    .btn-primary:hover { background: #134b66; transform: translateY(-1px); }
+    .btn-accent { background: #2c8f6e; color: white; }
+    .btn-accent:hover { background: #237a5c; transform: translateY(-1px); }
     footer {
       text-align: center;
       padding: 1rem;
@@ -182,7 +178,6 @@
       border-top: 1px solid #e2edf7;
       color: #4b6f86;
     }
-
     .logo-thumb {
       margin-top: 8px;
       max-width: 90px;
@@ -194,36 +189,98 @@
       display: none;
       object-fit: contain;
     }
-
-    hr {
-      margin: 1rem 0;
-      border: 0;
-      height: 1px;
-      background: linear-gradient(90deg, #dce5ef, transparent);
-    }
-
-    small {
-      font-size: 0.7rem;
-      color: #5e7e99;
-    }
-
+    hr { margin: 1rem 0; border: 0; height: 1px; background: linear-gradient(90deg,#dce5ef,transparent); }
+    small { font-size: 0.7rem; color: #5e7e99; }
     @media (max-width: 800px) {
-      body {
-        padding: 1rem;
-      }
-      .dashboard {
-        padding: 1rem;
-      }
-      .preview-container {
-        min-height: 550px;
-      }
-      iframe {
-        height: 550px;
-      }
+      body { padding: 1rem; }
+      .dashboard { padding: 1rem; }
+      .preview-container { min-height: 550px; }
+      iframe { height: 550px; }
     }
   </style>
 </head>
 <body>
+
+<!-- ============ PASSWORD OVERLAY ============ -->
+<div id="passwordOverlay">
+  <div id="passwordBox">
+    <h2>🔐 Access Required</h2>
+    <p>Enter the password to view this page</p>
+    <input type="password" id="passwordInput" placeholder="Enter password" autofocus>
+    <div id="passwordError"></div>
+    <button id="passwordBtn">Unlock</button>
+  </div>
+</div>
+
+<script>
+  // ----- Password logic + app initialisation -----
+  (function() {
+    const PASSWORD = "987689";
+    const overlay = document.getElementById('passwordOverlay');
+    const input = document.getElementById('passwordInput');
+    const error = document.getElementById('passwordError');
+    const btn = document.getElementById('passwordBtn');
+
+    // The app initialisation function (defined below)
+    let appInitialised = false;
+
+    function unlockAndInit() {
+      const entered = input.value.trim();
+      if (entered === PASSWORD) {
+        sessionStorage.setItem('covercraft_auth', 'true');
+        overlay.remove();
+        // Initialise the app if not already done
+        if (!appInitialised && typeof initApp === 'function') {
+          initApp();
+          appInitialised = true;
+        }
+        const firstInput = document.querySelector('input:not([type="file"])');
+        if (firstInput) firstInput.focus();
+      } else {
+        error.textContent = '❌ Incorrect password. Try again.';
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    // Check session
+    if (sessionStorage.getItem('covercraft_auth') === 'true') {
+      overlay.remove();
+      // App will be initialised via DOMContentLoaded or directly
+    } else {
+      overlay.style.display = 'flex';
+      input.focus();
+    }
+
+    btn.addEventListener('click', unlockAndInit);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') unlockAndInit();
+    });
+    input.addEventListener('input', () => {
+      error.textContent = '';
+    });
+
+    // If already authenticated, initialise on DOM ready
+    if (sessionStorage.getItem('covercraft_auth') === 'true') {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (!appInitialised && typeof initApp === 'function') {
+            initApp();
+            appInitialised = true;
+          }
+        });
+      } else {
+        if (!appInitialised && typeof initApp === 'function') {
+          initApp();
+          appInitialised = true;
+        }
+      }
+    }
+  })();
+</script>
+<!-- ============ END PASSWORD OVERLAY ============ -->
+
+<!-- ============ YOUR ORIGINAL CONTENT ============ -->
 <div class="app-card">
   <div class="header-bar">
     <h1>📄 CoverCraft – Clean Layout (No Labels)</h1>
@@ -231,7 +288,6 @@
   </div>
   <div class="dashboard">
     <div class="form-panel">
-      <!-- Top fields -->
       <div class="form-group"><label>🏛️ College Name (top section)</label><input type="text" id="collegeName" value="TRINITY INTERNATIONAL COLLEGE"></div>
       <div class="form-group">
         <label>🖼️ College Logo (Upload, resized 55×65 mm)</label>
@@ -240,23 +296,14 @@
         <small>Optimal: PNG or JPEG, will fit 55x65mm</small>
       </div>
       <div class="form-group"><label>📘 Lab Report Title</label><input type="text" id="reportName" value="Lab Report on Structures, Unions and Enumerations"></div>
-      
-      <!-- Left column fields -->
       <div class="form-group"><label>👤 Student Name</label><input type="text" id="studentName" value="Milan Magar"></div>
       <div class="form-group"><label>🎓 Program & Semester</label><input type="text" id="programSemester" value="BCA, 1st Semester"></div>
       <div class="form-group"><label>🔢 Roll No.</label><input type="text" id="rollNo" value="11"></div>
-      
-      <!-- Right column fields (includes new subject) -->
       <div class="form-group"><label>👨‍🏫 Teacher Name</label><input type="text" id="teacherName" value="Abiral KC"></div>
-      
-      <!-- NEW SUBJECT FIELD (added as requested) -->
       <div class="form-group"><label>📖 Subject Name</label><input type="text" id="subjectName" value="OOP in Java"></div>
-      
       <div class="form-group"><label>🏢 Department</label><input type="text" id="department" value="Department of BCA"></div>
       <div class="form-group"><label>🏛️ College Name (right column)</label><input type="text" id="collegeRight" value="Trinity International College"></div>
-      
       <div class="form-group"><label>📅 Submission Date (optional)</label><input type="text" id="date" placeholder="Leave empty to omit" value="03/20/2026"></div>
-      
       <div class="btn-row">
         <button class="btn btn-accent" id="previewBtn">👁️ Preview PDF</button>
         <button class="btn btn-primary" id="downloadBtn">⬇️ Download PDF</button>
@@ -275,8 +322,11 @@
 </div>
 
 <script>
-  (function() {
-    // DOM elements mapping
+  // ============================================================
+  //  APP LOGIC – Wrapped in initApp() for delayed initialisation
+  // ============================================================
+  function initApp() {
+    // DOM elements
     const collegeNameInput = document.getElementById('collegeName');
     const logoUpload = document.getElementById('logoUpload');
     const logoThumb = document.getElementById('logoThumb');
@@ -285,7 +335,7 @@
     const programSemesterInput = document.getElementById('programSemester');
     const rollNoInput = document.getElementById('rollNo');
     const teacherNameInput = document.getElementById('teacherName');
-    const subjectNameInput = document.getElementById('subjectName');    // <-- NEW subject field
+    const subjectNameInput = document.getElementById('subjectName');
     const departmentInput = document.getElementById('department');
     const collegeRightInput = document.getElementById('collegeRight');
     const dateInput = document.getElementById('date');
@@ -305,10 +355,9 @@
         const reader = new FileReader();
         reader.onload = (ev) => {
           uploadedLogoData = ev.target.result;
-          // Determine format for jsPDF
           if (file.type === 'image/jpeg' || file.type === 'image/jpg') uploadedLogoFormat = 'JPEG';
           else if (file.type === 'image/png') uploadedLogoFormat = 'PNG';
-          else uploadedLogoFormat = 'JPEG'; // fallback
+          else uploadedLogoFormat = 'JPEG';
           logoThumb.src = uploadedLogoData;
           logoThumb.style.display = 'block';
         };
@@ -319,7 +368,6 @@
       }
     });
     
-    // Sanitize fields to avoid empty content
     function sanitizeFields() {
       if (!collegeNameInput.value.trim()) collegeNameInput.value = "TRINITY INTERNATIONAL COLLEGE";
       if (!reportNameInput.value.trim()) reportNameInput.value = "Lab Report on Structures, Unions and Enumerations";
@@ -327,46 +375,40 @@
       if (!programSemesterInput.value.trim()) programSemesterInput.value = "BCA, 1st Semester";
       if (!rollNoInput.value.trim()) rollNoInput.value = "11";
       if (!teacherNameInput.value.trim()) teacherNameInput.value = "Abiral KC";
-      if (!subjectNameInput.value.trim()) subjectNameInput.value = "OOP in Java";   // default subject
+      if (!subjectNameInput.value.trim()) subjectNameInput.value = "OOP in Java";
       if (!departmentInput.value.trim()) departmentInput.value = "Department of BCA";
       if (!collegeRightInput.value.trim()) collegeRightInput.value = "Trinity International College";
-      // date optional - no default
     }
     
-    // ========== EXACT MEASUREMENTS (mm) ==========
-    const MARGIN_MM = 25.4;          // 1 inch
+    // MEASUREMENTS
+    const MARGIN_MM = 25.4;
     const PAGE_WIDTH_MM = 210;
-    const CONTENT_WIDTH_MM = PAGE_WIDTH_MM - 2 * MARGIN_MM; // 159.2 mm
+    const CONTENT_WIDTH_MM = PAGE_WIDTH_MM - 2 * MARGIN_MM;
     const LOGO_WIDTH_MM = 55;
     const LOGO_HEIGHT_MM = 65;
     const FONT_FAMILY = "times";
-    
     const COLLEGE_FONT_SIZE_PT = 24;
     const TITLE_FONT_SIZE_PT = 18;
-    const TITLE_LEADING_PT = 24;      // double spacing for title
+    const TITLE_LEADING_PT = 24;
     const TITLE_LEADING_MM = TITLE_LEADING_PT * 0.352778;
     const BODY_FONT_SIZE_PT = 14;
-    const BODY_LEADING_PT = 21;       // 1.5 lines approx
+    const BODY_LEADING_PT = 21;
     const BODY_LEADING_MM = BODY_LEADING_PT * 0.352778;
     
-    // Core PDF generation: clean no labels
     async function buildCoverPDF() {
       sanitizeFields();
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-      
-      // white background
-      doc.setFillColor(255, 255, 255);
+      doc.setFillColor(255,255,255);
       doc.rect(0, 0, PAGE_WIDTH_MM, 297, 'F');
       
-      // Gather values
       const collegeName = collegeNameInput.value.trim().toUpperCase();
       const reportName = reportNameInput.value.trim();
       const studentName = studentNameInput.value.trim();
       const programSemester = programSemesterInput.value.trim();
       const rollNo = rollNoInput.value.trim();
       const teacherName = teacherNameInput.value.trim();
-      const subjectName = subjectNameInput.value.trim();     // subject value
+      const subjectName = subjectNameInput.value.trim();
       const department = departmentInput.value.trim();
       const collegeRight = collegeRightInput.value.trim();
       const submissionDate = dateInput.value.trim();
@@ -375,7 +417,7 @@
       const contentCenterX = contentX + CONTENT_WIDTH_MM / 2;
       let currentY = MARGIN_MM;
       
-      // 1) College name (bold, centered)
+      // College name
       doc.setFont(FONT_FAMILY, "bold");
       doc.setFontSize(COLLEGE_FONT_SIZE_PT);
       const collegeLines = doc.splitTextToSize(collegeName, CONTENT_WIDTH_MM);
@@ -383,14 +425,13 @@
       const collegeLineHeightMM = COLLEGE_FONT_SIZE_PT * 1.2 * 0.352778;
       currentY += collegeLines.length * collegeLineHeightMM + 5;
       
-      // 2) Logo (55x65 mm centered)
+      // Logo
       if (uploadedLogoData && uploadedLogoFormat) {
         try {
           const imgX = contentCenterX - LOGO_WIDTH_MM / 2;
           doc.addImage(uploadedLogoData, uploadedLogoFormat, imgX, currentY, LOGO_WIDTH_MM, LOGO_HEIGHT_MM);
           currentY += LOGO_HEIGHT_MM + 25;
         } catch (err) {
-          // fallback text if image fails
           doc.setFont(FONT_FAMILY, "normal");
           doc.setFontSize(10);
           doc.text("[Logo could not be embedded]", contentCenterX, currentY + 10, { align: "center" });
@@ -403,14 +444,14 @@
         currentY += 20;
       }
       
-      // 3) Lab report title (bold, double spaced)
+      // Title
       doc.setFont(FONT_FAMILY, "bold");
       doc.setFontSize(TITLE_FONT_SIZE_PT);
       const titleLines = doc.splitTextToSize(reportName, CONTENT_WIDTH_MM);
       doc.text(titleLines, contentCenterX, currentY, { align: "center" });
       currentY += titleLines.length * TITLE_LEADING_MM + 20;
       
-      // 4) Two columns — NO LABELS, only raw values.
+      // Two columns
       const columnGap = 46;
       const columnWidth = (CONTENT_WIDTH_MM - columnGap) / 2;
       const leftColX = contentX;
@@ -419,8 +460,6 @@
       let leftY = currentY;
       let rightY = currentY;
       
-      // ----- LEFT COLUMN: "Submitted By" is just a heading (still no label for fields)
-      // We use minimalist heading: "Submitted By" as a category (but no colon or extra label for each field)
       doc.setFont(FONT_FAMILY, "bold");
       doc.setFontSize(BODY_FONT_SIZE_PT);
       doc.text("Submitted By", leftColX, leftY);
@@ -431,14 +470,12 @@
       doc.text(programSemester, leftColX, leftY); leftY += BODY_LEADING_MM;
       doc.text(`Roll No: ${rollNo}`, leftColX, leftY); leftY += BODY_LEADING_MM;
       
-      // ----- RIGHT COLUMN: "Submitted To" heading (no extra labels)
       doc.setFont(FONT_FAMILY, "bold");
       doc.text("Submitted To", rightColX, rightY);
       rightY += BODY_LEADING_MM + 2;
       
       doc.setFont(FONT_FAMILY, "normal");
       doc.text(teacherName, rightColX, rightY); rightY += BODY_LEADING_MM;
-      // NEW: Subject appears directly after Teacher name (as requested)
       doc.text(subjectName, rightColX, rightY); rightY += BODY_LEADING_MM;
       doc.text(department, rightColX, rightY); rightY += BODY_LEADING_MM;
       doc.text(collegeRight, rightColX, rightY); rightY += BODY_LEADING_MM;
@@ -446,7 +483,6 @@
       const maxBottom = Math.max(leftY, rightY);
       currentY = maxBottom + 12;
       
-      // Optional date (centered, only if provided)
       if (submissionDate !== "") {
         doc.setFont(FONT_FAMILY, "normal");
         doc.setFontSize(BODY_FONT_SIZE_PT);
@@ -456,7 +492,6 @@
       return doc;
     }
     
-    // Preview inside iframe
     let currentBlobUrl = null;
     
     async function updatePreview() {
@@ -489,7 +524,6 @@
       doc.save(`Cover_${fileName}.pdf`);
     }
     
-    // Event listeners
     previewBtn.addEventListener('click', (e) => {
       e.preventDefault();
       updatePreview();
@@ -500,21 +534,33 @@
       downloadPDF();
     });
     
-    // initial state: no preview
     pdfIframe.style.display = 'none';
     emptyPreviewMsgDiv.style.display = 'flex';
     
-    // Cleanup blob on page unload
     window.addEventListener('beforeunload', () => {
       if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
       if (pdfIframe.src && pdfIframe.src.startsWith('blob:')) URL.revokeObjectURL(pdfIframe.src);
     });
     
-    // Optional: set default subject if empty (ensuring field)
     if (subjectNameInput && subjectNameInput.value.trim() === "") {
       subjectNameInput.value = "OOP in Java";
     }
-  })();
+  }
+
+  // ---- We'll call initApp from the password script if needed ----
+  // The password script already handles calling initApp after unlock.
+  // If the page is already authenticated, we call initApp on DOM ready.
+  // For safety, we also call it now if the overlay is already removed.
+  if (document.getElementById('passwordOverlay') === null || 
+      document.getElementById('passwordOverlay').style.display === 'none') {
+    // Overlay already removed, initialise immediately
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+  }
 </script>
+
 </body>
 </html>
